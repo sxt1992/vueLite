@@ -1,6 +1,6 @@
 /* @flow */
 
-import he from 'he'
+import he from './entity-decoder'
 import { parseHTML } from './html-parser'
 import { parseText } from './text-parser'
 import { parseFilters } from './filter-parser'
