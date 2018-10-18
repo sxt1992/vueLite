@@ -105,10 +105,6 @@ export function enter (vnode: VNodeWithData, toggleDisplay: ?() => void) {
       : duration
   )
 
-  if (process.env.NODE_ENV !== 'production' && explicitEnterDuration != null) {
-    checkDuration(explicitEnterDuration, 'enter', vnode)
-  }
-
   const expectsCSS = css !== false && !isIE9
   const userWantsControl = getHookArgumentsLength(enterHook)
 
@@ -212,10 +208,6 @@ export function leave (vnode: VNodeWithData, rm: Function) {
       ? duration.leave
       : duration
   )
-
-  if (process.env.NODE_ENV !== 'production' && isDef(explicitLeaveDuration)) {
-    checkDuration(explicitLeaveDuration, 'leave', vnode)
-  }
 
   const cb = el._leaveCb = once(() => {
     if (el.parentNode && el.parentNode._pending) {

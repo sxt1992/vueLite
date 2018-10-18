@@ -42,17 +42,6 @@ export function addHandler (
   important?: boolean,
   warn?: Function
 ) {
-  // warn prevent and passive modifier
-  /* istanbul ignore if */
-  if (
-    process.env.NODE_ENV !== 'production' && warn &&
-    modifiers && modifiers.prevent && modifiers.passive
-  ) {
-    warn(
-      'passive and prevent can\'t be used together. ' +
-      'Passive handler can\'t prevent default event.'
-    )
-  }
   // check capture modifier
   if (modifiers && modifiers.capture) {
     delete modifiers.capture

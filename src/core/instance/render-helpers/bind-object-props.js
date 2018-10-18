@@ -20,12 +20,7 @@ export function bindObjectProps (
   isSync?: boolean
 ): VNodeData {
   if (value) {
-    if (!isObject(value)) {
-      process.env.NODE_ENV !== 'production' && warn(
-        'v-bind without argument expects an Object or Array value',
-        this
-      )
-    } else {
+    if (isObject(value)) {
       if (Array.isArray(value)) {
         value = toObject(value)
       }

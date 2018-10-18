@@ -12,18 +12,6 @@ function transformNode (el: ASTElement, options: CompilerOptions) {
   const warn = options.warn || baseWarn
   const staticStyle = getAndRemoveAttr(el, 'style')
   if (staticStyle) {
-    /* istanbul ignore if */
-    if (process.env.NODE_ENV !== 'production') {
-      const expression = parseText(staticStyle, options.delimiters)
-      if (expression) {
-        warn(
-          `style="${staticStyle}": ` +
-          'Interpolation inside attributes has been removed. ' +
-          'Use v-bind or the colon shorthand instead. For example, ' +
-          'instead of <div style="{{ val }}">, use <div :style="val">.'
-        )
-      }
-    }
     el.staticStyle = JSON.stringify(parseStyleText(staticStyle))
   }
 

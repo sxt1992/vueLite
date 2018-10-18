@@ -49,18 +49,8 @@ export function initRender (vm: Component) {
   // $attrs & $listeners are exposed for easier HOC creation.
   // they need to be reactive so that HOCs using them are always updated
   const parentData = parentVnode && parentVnode.data
-  /* istanbul ignore else */
-  if (process.env.NODE_ENV !== 'production') {
-    defineReactive(vm, '$attrs', parentData && parentData.attrs, () => {
-      !isUpdatingChildComponent && warn(`$attrs is readonly.`, vm)
-    }, true)
-    defineReactive(vm, '$listeners', vm.$options._parentListeners, () => {
-      !isUpdatingChildComponent && warn(`$listeners is readonly.`, vm)
-    }, true)
-  } else {
-    defineReactive(vm, '$attrs', parentData && parentData.attrs, null, true)
-    defineReactive(vm, '$listeners', vm.$options._parentListeners, null, true)
-  }
+  defineReactive(vm, '$attrs', parentData && parentData.attrs, null, true)
+  defineReactive(vm, '$listeners', vm.$options._parentListeners, null, true)
 }
 
 export function renderMixin (Vue: Class<Component>) {
@@ -97,26 +87,10 @@ export function renderMixin (Vue: Class<Component>) {
       vnode = render.call(vm._renderProxy, vm.$createElement)
     } catch (e) {
       handleError(e, vm, `render function`)
-      // return error render result,
-      // or previous vnode to prevent render error causing blank component
-      /* istanbul ignore else */
-      if (process.env.NODE_ENV !== 'production') {
-        vnode = vm.$options.renderError
-          ? vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
-          : vm._vnode
-      } else {
-        vnode = vm._vnode
-      }
+      vnode = vm._vnode
     }
     // return empty vnode in case the render function errored out
     if (!(vnode instanceof VNode)) {
-      if (process.env.NODE_ENV !== 'production' && Array.isArray(vnode)) {
-        warn(
-          'Multiple root nodes returned from render function. Render function ' +
-          'should return a single root node.',
-          vm
-        )
-      }
       vnode = createEmptyVNode()
     }
     // set parent

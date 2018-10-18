@@ -150,55 +150,18 @@ export function mountComponent (
   if (!vm.$options.render) {
     // 空节点
     vm.$options.render = createEmptyVNode
-    if (process.env.NODE_ENV !== 'production') {
-      /* istanbul ignore if */
-      if ((vm.$options.template && vm.$options.template.charAt(0) !== '#') ||
-        vm.$options.el || el) {
-        warn(
-          'You are using the runtime-only build of Vue where the template ' +
-          'compiler is not available. Either pre-compile the templates into ' +
-          'render functions, or use the compiler-included build.',
-          vm
-        )
-      } else {
-        warn(
-          'Failed to mount component: template or render function not defined.',
-          vm
-        )
-      }
-    }
   }
   // 钩子函数
   callHook(vm, 'beforeMount')
 
   let updateComponent
-  /* istanbul ignore if */
-  if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-    updateComponent = () => {
-      const name = vm._name
-      const id = vm._uid
-      const startTag = `vue-perf-start:${id}`
-      const endTag = `vue-perf-end:${id}`
-
-      mark(startTag)
-      const vnode = vm._render()
-      mark(endTag)
-      measure(`${name} render`, startTag, endTag)
-
-      mark(startTag)
-      vm._update(vnode, hydrating)
-      mark(endTag)
-      measure(`${name} patch`, startTag, endTag)
-    }
-  } else {
-    // updateComponent为监听函数, new Watcher(vm, updateComponent, noop)
-    updateComponent = () => {
-      // Vue.prototype._render 渲染函数
-      // vm._render() 返回一个VNode
-      // 更新dom
-      // vm._render()调用render函数，会返回一个VNode，在生成VNode的过程中，会动态计算getter,同时推入到dep里面
-      vm._update(vm._render(), hydrating)
-    }
+  // updateComponent为监听函数, new Watcher(vm, updateComponent, noop)
+  updateComponent = () => {
+    // Vue.prototype._render 渲染函数
+    // vm._render() 返回一个VNode
+    // 更新dom
+    // vm._render()调用render函数，会返回一个VNode，在生成VNode的过程中，会动态计算getter,同时推入到dep里面
+    vm._update(vm._render(), hydrating)
   }
   // 新建一个_watcher对象
   // vm实例上挂载的_watcher主要是为了更新DOM
@@ -222,10 +185,6 @@ export function updateChildComponent (
   parentVnode: VNode,
   renderChildren: ?Array<VNode>
 ) {
-  if (process.env.NODE_ENV !== 'production') {
-    isUpdatingChildComponent = true
-  }
-
   // determine whether component has slot children
   // we need to do this before overwriting $options._renderChildren
   const hasChildren = !!(
@@ -273,10 +232,6 @@ export function updateChildComponent (
   if (hasChildren) {
     vm.$slots = resolveSlots(renderChildren, parentVnode.context)
     vm.$forceUpdate()
-  }
-
-  if (process.env.NODE_ENV !== 'production') {
-    isUpdatingChildComponent = false
   }
 }
 

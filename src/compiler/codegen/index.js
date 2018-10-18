@@ -108,9 +108,6 @@ function genOnce (el: ASTElement, state: CodegenState): string {
       parent = parent.parent
     }
     if (!key) {
-      process.env.NODE_ENV !== 'production' && state.warn(
-        `v-once can only be used inside v-for that is keyed. `
-      )
       return genElement(el, state)
     }
     return `_o(${genElement(el, state)},${state.onceId++}${key ? `,${key}` : ``})`
@@ -170,20 +167,6 @@ export function genFor (
   const alias = el.alias
   const iterator1 = el.iterator1 ? `,${el.iterator1}` : ''
   const iterator2 = el.iterator2 ? `,${el.iterator2}` : ''
-
-  if (process.env.NODE_ENV !== 'production' &&
-    state.maybeComponent(el) &&
-    el.tag !== 'slot' &&
-    el.tag !== 'template' &&
-    !el.key
-  ) {
-    state.warn(
-      `<${el.tag} v-for="${alias} in ${exp}">: component lists rendered with ` +
-      `v-for should have explicit keys. ` +
-      `See https://vuejs.org/guide/list.html#key for more info.`,
-      true /* tip */
-    )
-  }
 
   el.forProcessed = true // avoid recursion
   return `${altHelper || '_l'}((${exp}),` +
@@ -308,11 +291,6 @@ function genDirectives (el: ASTElement, state: CodegenState): string | void {
 
 function genInlineTemplate (el: ASTElement, state: CodegenState): ?string {
   const ast = el.children[0]
-  if (process.env.NODE_ENV !== 'production' && (
-    el.children.length > 1 || ast.type !== 1
-  )) {
-    state.warn('Inline-template components must have exactly one child element.')
-  }
   if (ast.type === 1) {
     const inlineRenderFns = generate(ast, state.options)
     return `inlineTemplate:{render:function(){${

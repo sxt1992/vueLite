@@ -18,19 +18,7 @@ export function initInjections (vm: Component) {
   if (result) {
     observerState.shouldConvert = false
     Object.keys(result).forEach(key => {
-      /* istanbul ignore else */
-      if (process.env.NODE_ENV !== 'production') {
-        defineReactive(vm, key, result[key], () => {
-          warn(
-            `Avoid mutating an injected value directly since the changes will be ` +
-            `overwritten whenever the provided component re-renders. ` +
-            `injection being mutated: "${key}"`,
-            vm
-          )
-        })
-      } else {
-        defineReactive(vm, key, result[key])
-      }
+      defineReactive(vm, key, result[key])
     })
     observerState.shouldConvert = true
   }
@@ -54,9 +42,6 @@ export function resolveInject (inject: any, vm: Component): ?Object {
           break
         }
         source = source.$parent
-      }
-      if (process.env.NODE_ENV !== 'production' && !source) {
-        warn(`Injection "${key}" not found`, vm)
       }
     }
     return result

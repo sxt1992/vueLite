@@ -46,9 +46,6 @@ export function validateProp (
     observe(value)
     observerState.shouldConvert = prevShouldConvert
   }
-  if (process.env.NODE_ENV !== 'production') {
-    assertProp(prop, key, value, vm, absent)
-  }
   return value
 }
 
@@ -61,15 +58,6 @@ function getPropDefaultValue (vm: ?Component, prop: PropOptions, key: string): a
     return undefined
   }
   const def = prop.default
-  // warn against non-factory defaults for Object & Array
-  if (process.env.NODE_ENV !== 'production' && isObject(def)) {
-    warn(
-      'Invalid default value for prop "' + key + '": ' +
-      'Props with type Object/Array must use a factory function ' +
-      'to return the default value.',
-      vm
-    )
-  }
   // the raw prop value was also undefined from previous render,
   // return previous default value to avoid unnecessary watcher trigger
   if (vm && vm.$options.propsData &&

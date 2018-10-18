@@ -52,12 +52,7 @@ export function updateListeners (
     cur = on[name]
     old = oldOn[name]
     event = normalizeEvent(name)
-    if (isUndef(cur)) {
-      process.env.NODE_ENV !== 'production' && warn(
-        `Invalid handler for event "${event.name}": got ` + String(cur),
-        vm
-      )
-    } else if (isUndef(old)) {
+    if (isUndef(old)) {
       if (isUndef(cur.fns)) {
         cur = on[name] = createFnInvoker(cur)
       }

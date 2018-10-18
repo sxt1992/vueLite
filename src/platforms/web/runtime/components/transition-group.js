@@ -48,10 +48,6 @@ export default {
           children.push(c)
           map[c.key] = c
           ;(c.data || (c.data = {})).transition = transitionData
-        } else if (process.env.NODE_ENV !== 'production') {
-          const opts: ?VNodeComponentOptions = c.componentOptions
-          const name: string = opts ? (opts.Ctor.options.name || opts.tag || '') : c.tag
-          warn(`<transition-group> children must be keyed: <${name}>`)
         }
       }
     }

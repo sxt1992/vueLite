@@ -4,12 +4,7 @@ import { warn, extend, isPlainObject } from 'core/util/index'
 
 export function bindObjectListeners (data: any, value: any): VNodeData {
   if (value) {
-    if (!isPlainObject(value)) {
-      process.env.NODE_ENV !== 'production' && warn(
-        'v-on without argument expects an Object value',
-        this
-      )
-    } else {
+    if (isPlainObject(value)){
       const on = data.on = data.on ? extend({}, data.on) : {}
       for (const key in value) {
         const existing = on[key]

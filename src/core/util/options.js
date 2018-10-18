@@ -27,21 +27,6 @@ import {
 const strats = config.optionMergeStrategies
 
 /**
- * Options with restrictions
- */
-if (process.env.NODE_ENV !== 'production') {
-  strats.el = strats.propsData = function (parent, child, vm, key) {
-    if (!vm) {
-      warn(
-        `option "${key}" can only be used during instance ` +
-        'creation with the `new` keyword.'
-      )
-    }
-    return defaultStrat(parent, child)
-  }
-}
-
-/**
  * Helper that recursively merges two data objects together.
  */
 function mergeData (to: Object, from: ?Object): Object {
@@ -113,13 +98,6 @@ strats.data = function (
 ): ?Function {
   if (!vm) {
     if (childVal && typeof childVal !== 'function') {
-      process.env.NODE_ENV !== 'production' && warn(
-        'The "data" option should be a function ' +
-        'that returns a per-instance value in component ' +
-        'definitions.',
-        vm
-      )
-
       return parentVal
     }
     return mergeDataOrFn.call(this, parentVal, childVal)
@@ -249,8 +227,6 @@ function normalizeProps (options: Object) {
       if (typeof val === 'string') {
         name = camelize(val)
         res[name] = { type: null }
-      } else if (process.env.NODE_ENV !== 'production') {
-        warn('props must be strings when using array syntax.')
       }
     }
   } else if (isPlainObject(props)) {
@@ -302,10 +278,6 @@ export function mergeOptions (
   child: Object,
   vm?: Component
 ): Object {
-  if (process.env.NODE_ENV !== 'production') {
-    checkComponents(child)
-  }
-
   if (typeof child === 'function') {
     child = child.options
   }
@@ -363,11 +335,5 @@ export function resolveAsset (
   if (hasOwn(assets, PascalCaseId)) return assets[PascalCaseId]
   // fallback to prototype chain
   const res = assets[id] || assets[camelizedId] || assets[PascalCaseId]
-  if (process.env.NODE_ENV !== 'production' && warnMissing && !res) {
-    warn(
-      'Failed to resolve ' + type.slice(0, -1) + ': ' + id,
-      options
-    )
-  }
   return res
 }

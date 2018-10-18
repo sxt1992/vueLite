@@ -26,22 +26,6 @@ export function extractPropsFromVNodeData (
   if (isDef(attrs) || isDef(props)) {
     for (const key in propOptions) {
       const altKey = hyphenate(key)
-      if (process.env.NODE_ENV !== 'production') {
-        const keyInLowerCase = key.toLowerCase()
-        if (
-          key !== keyInLowerCase &&
-          attrs && hasOwn(attrs, keyInLowerCase)
-        ) {
-          tip(
-            `Prop "${keyInLowerCase}" is passed to component ` +
-            `${formatComponentName(tag || Ctor)}, but the declared prop name is` +
-            ` "${key}". ` +
-            `Note that HTML attributes are case-insensitive and camelCased ` +
-            `props need to use their kebab-case equivalents when using in-DOM ` +
-            `templates. You should probably use "${altKey}" instead of "${key}".`
-          )
-        }
-      }
       checkProp(res, props, key, altKey, true) ||
       checkProp(res, attrs, key, altKey, false)
     }
