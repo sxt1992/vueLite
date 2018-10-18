@@ -1,7 +1,6 @@
 /* @flow */
 
 import config from '../config'
-import { warn } from './debug'
 import { inBrowser } from './env'
 
 export function handleError (err: Error, vm: any, info: string) {

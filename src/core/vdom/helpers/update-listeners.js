@@ -1,6 +1,5 @@
 /* @flow */
 
-import { warn } from 'core/util/index'
 import { cached, isUndef } from 'shared/util'
 
 const normalizeEvent = cached((name: string): {

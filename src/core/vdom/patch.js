@@ -19,7 +19,6 @@ import { registerRef } from './modules/ref'
 import { activeInstance } from '../instance/lifecycle'
 
 import {
-  warn,
   isDef,
   isUndef,
   isTrue,

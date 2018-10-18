@@ -1,9 +1,5 @@
 /* @flow */
 
-// Provides transition support for a single element/component.
-// supports transition mode (out-in / in-out)
-
-import { warn } from 'core/util/index'
 import { camelize, extend, isPrimitive } from 'shared/util'
 import { mergeVNodeHook, getFirstComponentChild } from 'core/vdom/helpers/index'
 

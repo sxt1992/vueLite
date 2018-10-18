@@ -5,7 +5,6 @@ import VNode, { createEmptyVNode } from './vnode'
 import { createComponent } from './create-component'
 
 import {
-  warn,
   isDef,
   isUndef,
   isTrue,

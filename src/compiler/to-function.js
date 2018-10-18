@@ -1,7 +1,7 @@
 /* @flow */
 
 import { noop } from 'shared/util'
-import { warn, tip } from 'core/util/debug'
+import { tip } from 'core/util/debug'
 
 type CompiledFunctionResult = {
   render: Function;

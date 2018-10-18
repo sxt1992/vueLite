@@ -2,12 +2,9 @@
 
 // object, 返回默认配置
 import config from '../config'
-// 使用 Proxy 方法
-import { initProxy } from './proxy'
 import { initState } from './state'
 import { initRender } from './render'
 import { initEvents } from './events'
-import { mark, measure } from '../util/perf'
 import { initLifecycle, callHook } from './lifecycle'
 import { initProvide, initInjections } from './inject'
 import { extend, mergeOptions, formatComponentName } from '../util/index'

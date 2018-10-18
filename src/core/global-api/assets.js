@@ -2,7 +2,7 @@
 
 import config from '../config'
 import { ASSET_TYPES } from 'shared/constants'
-import { warn, isPlainObject } from '../util/index'
+import { isPlainObject } from '../util/index'
 
 export function initAssetRegisters (Vue: GlobalAPI) {
   /**

@@ -3,7 +3,6 @@
 import config from 'core/config'
 
 import {
-  warn,
   isObject,
   toObject,
   isReservedAttribute

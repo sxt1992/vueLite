@@ -1,6 +1,6 @@
 /* @flow */
 
-import { extend, warn } from 'core/util/index'
+import { extend } from 'core/util/index'
 
 /**
  * Runtime helper for rendering <slot>

@@ -1,6 +1,5 @@
 /* @flow */
 
-import { warn } from '../util/index'
 import { hasSymbol } from 'core/util/env'
 import { defineReactive, observerState } from '../observer/index'
 

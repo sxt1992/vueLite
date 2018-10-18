@@ -7,7 +7,6 @@ import config from '../config'
 import { callHook, activateChildComponent } from '../instance/lifecycle'
 
 import {
-  warn,
   nextTick,
   devtools
 } from '../util/index'

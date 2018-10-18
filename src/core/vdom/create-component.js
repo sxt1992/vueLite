@@ -6,7 +6,6 @@ import { queueActivatedComponent } from 'core/observer/scheduler'
 import { createFunctionalComponent } from './create-functional-component'
 
 import {
-  warn,
   isDef,
   isUndef,
   isTrue,

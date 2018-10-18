@@ -1,7 +1,6 @@
 /* @flow */
 
 import {
-  warn,
   nextTick,
   toNumber,
   toString,
