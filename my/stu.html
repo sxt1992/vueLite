@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>学习</title>
-  <script src="../dist/vue.js"></script>
-  <script src="./learnVue.js"></script>
+    <meta charset="UTF-8">
+    <title>学习</title>
+    <script src="../dist/vue.js"></script>
+    <script src="./learnVue.js"></script>
 </head>
-
 <body>
-  <div id="app">
-    <div>{{txj}}</div>
-    <div v-for="item in xue">{{item}}</div>
-    <div>a.key1 = {{a.key1}}</div>
-    <div>a.key2.a = {{a.key2.a}}</div>
-    <div>{{b}}</div>
-  </div>
-  <script type="text/javascript">
-    let app = new Vue({
-      el: '#app',
-      props: {
-        a: {
-          type: Object,
-          default() {
-            return {
-              key1: 'a',
-              key2: { a: 'b' }
-            }
-          }
-        },
-        b: {
-          type: Number,
-          default() {
-            return 9898
-          }
-        }
-      },
-      data: {
-        txj: 'taoxuejiao',
-        xue: ['tao', 'xue', 'jiao']
-      }
-    });
-  </script>
+<div id="app">
+    aaa你好吗?aaa
+    <div
+        class="red-color"
+        :class="{bgcor: hasBgCor}"
+        v-if="person.id > 15"
+        v-show="person.id > 25"
+        v-for="person in allPerson"
+        :key="person.id">
+        {{person.name}}
+    </div>
+    <div>I'm OK !</div>
+    {{abc}}
+    <div :style="{
+        width: '100px',
+        height: '100px',
+        backgroundColor: 'red'
+    }">show 颜色 !!!</div>
+</div>
+<script type="text/javascript">
+const app = new Vue({
+    el: '#app',
+    data: {
+        abc: '342',
+        hasBgCor: true,
+        allPerson: [
+            { name: 'ta1', id: 10},
+            { name: 'ta2', id: 23},
+            { name: 'ta3', id: 37}
+        ]
+    }
+});
+</script>
 </body>
-
 </html>
