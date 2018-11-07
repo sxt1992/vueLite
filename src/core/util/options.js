@@ -202,12 +202,6 @@ const defaultStrat = function (parentVal: any, childVal: any): any {
 function checkComponents (options: Object) {
   for (const key in options.components) {
     const lower = key.toLowerCase()
-    if (isBuiltInTag(lower) || config.isReservedTag(lower)) {
-      warn(
-        'Do not use built-in or reserved HTML elements as component ' +
-        'id: ' + key
-      )
-    }
   }
 }
 

@@ -84,10 +84,6 @@ function assertProp (
   absent: boolean
 ) {
   if (prop.required && absent) {
-    warn(
-      'Missing required prop: "' + name + '"',
-      vm
-    )
     return
   }
   if (value == null && !prop.required) {
@@ -107,23 +103,9 @@ function assertProp (
     }
   }
   if (!valid) {
-    warn(
-      'Invalid prop: type check failed for prop "' + name + '".' +
-      ' Expected ' + expectedTypes.map(capitalize).join(', ') +
-      ', got ' + Object.prototype.toString.call(value).slice(8, -1) + '.',
-      vm
-    )
     return
   }
   const validator = prop.validator
-  if (validator) {
-    if (!validator(value)) {
-      warn(
-        'Invalid prop: custom validator check failed for prop "' + name + '".',
-        vm
-      )
-    }
-  }
 }
 
 const simpleCheckRE = /^(String|Number|Boolean|Function|Symbol)$/

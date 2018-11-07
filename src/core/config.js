@@ -16,7 +16,6 @@ export type Config = {
   silent: boolean;
   productionTip: boolean;
   performance: boolean;
-  devtools: boolean;
   errorHandler: ?(err: Error, vm: Component, info: string) => void;
   warnHandler: ?(msg: string, vm: Component, trace: string) => void;
   ignoredElements: Array<string>;
@@ -49,11 +48,6 @@ export default ({
    * Show production mode tip message on boot?
    */
   productionTip: false,
-
-  /**
-   * Whether to enable devtools
-   */
-  devtools: false,
 
   /**
    * Whether to record perf

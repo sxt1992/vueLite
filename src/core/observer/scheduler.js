@@ -6,10 +6,7 @@ import config from '../config'
 // 生命周期
 import { callHook, activateChildComponent } from '../instance/lifecycle'
 
-import {
-  nextTick,
-  devtools
-} from '../util/index'
+import { nextTick } from '../util/index'
 
 export const MAX_UPDATE_COUNT = 100
 
@@ -65,12 +62,6 @@ function flushSchedulerQueue () {
   // call component updated and activated hooks
   callActivatedHooks(activatedQueue)
   callUpdatedHooks(updatedQueue)
-
-  // devtool hook
-  /* istanbul ignore if */
-  if (devtools && config.devtools) {
-    devtools.emit('flush')
-  }
 }
 
 function callUpdatedHooks (queue) {

@@ -267,23 +267,6 @@ export function leave (vnode: VNodeWithData, rm: Function) {
   }
 }
 
-// only used in dev mode
-function checkDuration (val, name, vnode) {
-  if (typeof val !== 'number') {
-    warn(
-      `<transition> explicit ${name} duration is not a valid number - ` +
-      `got ${JSON.stringify(val)}.`,
-      vnode.context
-    )
-  } else if (isNaN(val)) {
-    warn(
-      `<transition> explicit ${name} duration is NaN - ` +
-      'the duration expression might be incorrect.',
-      vnode.context
-    )
-  }
-}
-
 function isValidDuration (val) {
   return typeof val === 'number' && !isNaN(val)
 }

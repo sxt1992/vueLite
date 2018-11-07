@@ -67,13 +67,6 @@ export function parse (
   let inPre = false
   let warned = false
 
-  function warnOnce (msg) {
-    if (!warned) {
-      warned = true
-      warn(msg)
-    }
-  }
-
   function endPre (element) {
     // check pre state
     if (element.pre) {
@@ -511,15 +504,6 @@ function guardIESVGBug (attrs) {
 function checkForAliasModel (el, value) {
   let _el = el
   while (_el) {
-    if (_el.for && _el.alias === value) {
-      warn(
-        `<${el.tag} v-model="${value}">: ` +
-        `You are binding v-model directly to a v-for iteration alias. ` +
-        `This will not be able to modify the v-for source array because ` +
-        `writing to the alias is like modifying a function local variable. ` +
-        `Consider using an array of objects and use v-model on an object property instead.`
-      )
-    }
     _el = _el.parent
   }
 }

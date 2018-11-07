@@ -32,10 +32,8 @@ import { eventsMixin } from './events'
 // Vue.prototype.$forceUpdate = function () { }
 // Vue.prototype.$destroy = function () { }
 import { lifecycleMixin } from './lifecycle'
-import { warn } from '../util/index'
 
 function Vue(options) {
-  warn('Vue is a constructor and should be called with the `new` keyword')
   this._init(options)
 }
 

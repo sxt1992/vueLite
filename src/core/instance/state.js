@@ -66,16 +66,6 @@ export function initState(vm: Component) {
   }
 }
 
-function checkOptionType(vm: Component, name: string) {
-  const option = vm.$options[name]
-  if (!isPlainObject(option)) {
-    warn(
-      `component option "${name}" should be an object.`,
-      vm
-    )
-  }
-}
-
 function initProps(vm: Component, propsOptions: Object) {
   // propsData主要是为了方便测试使用
   const propsData = vm.$options.propsData || {}
