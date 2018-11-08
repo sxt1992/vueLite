@@ -9,9 +9,6 @@ module.exports = {
   format: 'umd',
   moduleName: 'Vue',
   plugins: [
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    }),
     flow(),
     alias({
       vue: path.resolve(__dirname, 'src/platforms/web/compiler'),

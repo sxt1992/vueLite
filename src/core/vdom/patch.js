@@ -14,7 +14,6 @@
 
 import VNode from './vnode'
 import config from '../config'
-import { SSR_ATTR } from 'shared/constants'
 import { registerRef } from './modules/ref'
 import { activeInstance } from '../instance/lifecycle'
 
@@ -549,13 +548,6 @@ export function createPatchFunction (backend) {
         patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)
       } else {
         if (isRealElement) {
-          // mounting to a real element
-          // check if this is server-rendered content and if we can perform
-          // a successful hydration.
-          if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
-            oldVnode.removeAttribute(SSR_ATTR)
-            hydrating = true
-          }
           if (isTrue(hydrating)) {
             if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
               invokeInsertHook(vnode, insertedVnodeQueue, true)

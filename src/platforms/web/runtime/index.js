@@ -38,8 +38,7 @@ Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
-  el = el ? query(el) : undefined
-  return mountComponent(this, el, hydrating)
+  return mountComponent(this, el ? query(el) : undefined, hydrating)
 }
 
 export default Vue
