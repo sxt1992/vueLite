@@ -6,7 +6,7 @@ import { parseText } from './text-parser'
 import { parseFilters } from './filter-parser'
 import { cached, no, camelize } from 'shared/util'
 import { genAssignmentCode } from '../directives/model'
-import { isIE, isEdge, isServerRendering } from 'core/util/env'
+import { isIE, isEdge } from 'core/util/env'
 
 import {
   addProp,
@@ -107,7 +107,7 @@ export function parse (
         element.ns = ns
       }
 
-      if (isForbiddenTag(element) && !isServerRendering()) {
+      if (isForbiddenTag(element)) {
         element.forbidden = true
       }
 

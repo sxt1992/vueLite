@@ -4,7 +4,7 @@ import Vue from 'core/index'
 import config from 'core/config'
 import { extend, noop } from 'shared/util'
 import { mountComponent } from 'core/instance/lifecycle'
-import { devtools, inBrowser, isChrome } from 'core/util/index'
+import { isChrome } from 'core/util/index'
 
 import {
   query,
@@ -31,14 +31,14 @@ extend(Vue.options.directives, platformDirectives)
 extend(Vue.options.components, platformComponents)
 
 // install platform patch function
-Vue.prototype.__patch__ = inBrowser ? patch : noop
+Vue.prototype.__patch__ = patch
 
 // public mount method
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
-  el = el && inBrowser ? query(el) : undefined
+  el = el ? query(el) : undefined
   return mountComponent(this, el, hydrating)
 }
 

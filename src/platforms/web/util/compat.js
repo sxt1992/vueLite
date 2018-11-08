@@ -1,7 +1,5 @@
 /* @flow */
 
-import { inBrowser } from 'core/util/index'
-
 // check whether current browser encodes a char inside attribute values
 function shouldDecode (content: string, encoded: string): boolean {
   const div = document.createElement('div')
@@ -11,4 +9,4 @@ function shouldDecode (content: string, encoded: string): boolean {
 
 // #3663
 // IE encodes newlines inside attribute values while other browsers don't
-export const shouldDecodeNewlines = inBrowser ? shouldDecode('\n', '&#10;') : false
+export const shouldDecodeNewlines = shouldDecode('\n', '&#10;')

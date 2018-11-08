@@ -10,8 +10,7 @@ import {
   hasProto,
   isObject,
   isPlainObject,
-  isValidArrayIndex,
-  isServerRendering
+  isValidArrayIndex
 } from '../util/index'
 
 const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
@@ -113,7 +112,6 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
     ob = value.__ob__
   } else if (
     observerState.shouldConvert &&
-    !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
     Object.isExtensible(value) &&
     !value._isVue

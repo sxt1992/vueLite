@@ -8,8 +8,7 @@ import { handleError } from './error'
 export const hasProto = '__proto__' in {}
 
 // Browser environment sniffing
-export const inBrowser = typeof window !== 'undefined'
-export const UA = inBrowser && window.navigator.userAgent.toLowerCase()
+export const UA = window.navigator.userAgent.toLowerCase()
 export const isIE = UA && /msie|trident/.test(UA)
 export const isIE9 = UA && UA.indexOf('msie 9.0') > 0
 export const isEdge = UA && UA.indexOf('edge/') > 0
@@ -22,38 +21,16 @@ export const nativeWatch = ({}).watch
 
 export let supportsPassive = false
 // http://blog.csdn.net/shenlei19911210/article/details/70198771
-if (inBrowser) {
-  try {
-    const opts = {}
-    Object.defineProperty(opts, 'passive', ({
-      get () {
-        /* istanbul ignore next */
-        supportsPassive = true
-      }
-    }: Object)) // https://github.com/facebook/flow/issues/285
-    window.addEventListener('test-passive', null, opts)
-  } catch (e) { }
-}
-
-// this needs to be lazy-evaled because vue may be required before
-// vue-server-renderer can set VUE_ENV
-let _isServer
-export const isServerRendering = () => {
-  if (_isServer === undefined) {
-    /* istanbul ignore if */
-    if (!inBrowser && typeof global !== 'undefined') {
-      // detect presence of vue-server-renderer and avoid
-      // Webpack shimming the process
-      _isServer = global['process'].env.VUE_ENV === 'server'
-    } else {
-      _isServer = false
+try {
+  const opts = {}
+  Object.defineProperty(opts, 'passive', ({
+    get () {
+      /* istanbul ignore next */
+      supportsPassive = true
     }
-  }
-  return _isServer
-}
-
-// detect devtools
-export const devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__
+  }: Object)) // https://github.com/facebook/flow/issues/285
+  window.addEventListener('test-passive', null, opts)
+} catch (e) { }
 
 /* istanbul ignore next */
 export function isNative (Ctor: any): boolean {
