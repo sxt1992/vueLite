@@ -4,7 +4,6 @@ import Vue from 'core/index'
 import config from 'core/config'
 import { extend, noop } from 'shared/util'
 import { mountComponent } from 'core/instance/lifecycle'
-import { isChrome } from 'core/util/index'
 
 import {
   query,

@@ -1,7 +1,4 @@
 /* @flow */
-
-import { isIE9 } from 'core/util/env'
-
 import {
   extend,
   isDef,
@@ -41,11 +38,7 @@ function updateAttrs (oldVnode: VNodeWithData, vnode: VNodeWithData) {
       setAttr(elm, key, cur)
     }
   }
-  // #4391: in IE9, setting type can reset value for input[type=radio]
-  /* istanbul ignore if */
-  if (isIE9 && attrs.value !== oldAttrs.value) {
-    setAttr(elm, 'value', attrs.value)
-  }
+
   for (key in oldAttrs) {
     if (isUndef(attrs[key])) {
       if (isXlink(key)) {

@@ -63,11 +63,6 @@ const encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#10);/g
 const isIgnoreNewlineTag = makeMap('pre,textarea', true)
 const shouldIgnoreFirstNewline = (tag, html) => tag && isIgnoreNewlineTag(tag) && html[0] === '\n'
 
-function decodeAttr (value, shouldDecodeNewlines) {
-  const re = shouldDecodeNewlines ? encodedAttrWithNewLines : encodedAttr
-  return value.replace(re, match => decodingMap[match])
-}
-
 export function parseHTML (html, options) {
   const stack = []
   const expectHTML = options.expectHTML
@@ -247,10 +242,7 @@ export function parseHTML (html, options) {
       const value = args[3] || args[4] || args[5] || ''
       attrs[i] = {
         name: args[1],
-        value: decodeAttr(
-          value,
-          options.shouldDecodeNewlines
-        )
+        value: value.replace(encodedAttr, match => decodingMap[match])
       }
     }
 

@@ -2,7 +2,6 @@
 
 import config from '../config'
 import { warn } from './debug'
-import { nativeWatch } from './env'
 import { set } from '../observer/index'
 
 import {
@@ -152,8 +151,8 @@ ASSET_TYPES.forEach(function (type) {
  */
 strats.watch = function (parentVal: ?Object, childVal: ?Object): ?Object {
   // work around Firefox's Object.prototype.watch...
-  if (parentVal === nativeWatch) parentVal = undefined
-  if (childVal === nativeWatch) childVal = undefined
+  if (parentVal === undefined) parentVal = undefined
+  if (childVal === undefined) childVal = undefined
   /* istanbul ignore if */
   if (!childVal) return Object.create(parentVal || null)
   if (!parentVal) return childVal

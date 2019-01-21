@@ -6,7 +6,6 @@ import { parseText } from './text-parser'
 import { parseFilters } from './filter-parser'
 import { cached, no, camelize } from 'shared/util'
 import { genAssignmentCode } from '../directives/model'
-import { isIE, isEdge } from 'core/util/env'
 
 import {
   addProp,
@@ -82,18 +81,11 @@ export function parse (
     expectHTML: options.expectHTML,
     isUnaryTag: options.isUnaryTag,
     canBeLeftOpenTag: options.canBeLeftOpenTag,
-    shouldDecodeNewlines: options.shouldDecodeNewlines,
     shouldKeepComment: options.comments,
     start (tag, attrs, unary) {
       // check namespace.
       // inherit parent ns if there is one
       const ns = (currentParent && currentParent.ns) || platformGetTagNamespace(tag)
-
-      // handle IE svg bug
-      /* istanbul ignore if */
-      if (isIE && ns === 'svg') {
-        attrs = guardIESVGBug(attrs)
-      }
 
       const element: ASTElement = {
         type: 1,
@@ -204,14 +196,7 @@ export function parse (
       if (!currentParent) {
         return
       }
-      // IE textarea placeholder bug
-      /* istanbul ignore if */
-      if (isIE &&
-        currentParent.tag === 'textarea' &&
-        currentParent.attrsMap.placeholder === text
-      ) {
-        return
-      }
+
       const children = currentParent.children
       text = inPre || text.trim()
         ? isTextTag(currentParent) ? text : decodeHTMLCached(text)
@@ -485,25 +470,3 @@ function isForbiddenTag (el): boolean {
   )
 }
 
-const ieNSBug = /^xmlns:NS\d+/
-const ieNSPrefix = /^NS\d+:/
-
-/* istanbul ignore next */
-function guardIESVGBug (attrs) {
-  const res = []
-  for (let i = 0; i < attrs.length; i++) {
-    const attr = attrs[i]
-    if (!ieNSBug.test(attr.name)) {
-      attr.name = attr.name.replace(ieNSPrefix, '')
-      res.push(attr)
-    }
-  }
-  return res
-}
-
-function checkForAliasModel (el, value) {
-  let _el = el
-  while (_el) {
-    _el = _el.parent
-  }
-}

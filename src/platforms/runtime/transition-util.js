@@ -1,6 +1,4 @@
 /* @flow */
-
-import { isIE9 } from 'core/util/index'
 import { addClass, removeClass } from './class-util'
 import { remove, extend, cached } from 'shared/util'
 
@@ -32,7 +30,6 @@ const autoCssTransition: (name: string) => Object = cached(name => {
   }
 })
 
-export const hasTransition = !isIE9
 const TRANSITION = 'transition'
 const ANIMATION = 'animation'
 
@@ -41,20 +38,18 @@ export let transitionProp = 'transition'
 export let transitionEndEvent = 'transitionend'
 export let animationProp = 'animation'
 export let animationEndEvent = 'animationend'
-if (hasTransition) {
-  /* istanbul ignore if */
-  if (window.ontransitionend === undefined &&
-    window.onwebkittransitionend !== undefined
-  ) {
-    transitionProp = 'WebkitTransition'
-    transitionEndEvent = 'webkitTransitionEnd'
-  }
-  if (window.onanimationend === undefined &&
-    window.onwebkitanimationend !== undefined
-  ) {
-    animationProp = 'WebkitAnimation'
-    animationEndEvent = 'webkitAnimationEnd'
-  }
+
+if (window.ontransitionend === undefined &&
+  window.onwebkittransitionend !== undefined
+) {
+  transitionProp = 'WebkitTransition'
+  transitionEndEvent = 'webkitTransitionEnd'
+}
+if (window.onanimationend === undefined &&
+  window.onwebkitanimationend !== undefined
+) {
+  animationProp = 'WebkitAnimation'
+  animationEndEvent = 'webkitAnimationEnd'
 }
 
 // binding to window is necessary to make hot reload work in IE in strict mode

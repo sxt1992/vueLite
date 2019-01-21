@@ -16,7 +16,6 @@ import { addClass, removeClass } from '../class-util'
 import { transitionProps, extractTransitionData } from './transition'
 
 import {
-  hasTransition,
   getTransitionInfo,
   transitionEndEvent,
   addTransitionClass,
@@ -119,10 +118,6 @@ export default {
 
   methods: {
     hasMove (el: any, moveClass: string): boolean {
-      /* istanbul ignore if */
-      if (!hasTransition) {
-        return false
-      }
       /* istanbul ignore if */
       if (this._hasMove) {
         return this._hasMove

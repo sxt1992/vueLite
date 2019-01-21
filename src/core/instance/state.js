@@ -22,7 +22,6 @@ import {
   hasOwn,
   isReserved,
   handleError,
-  nativeWatch,
   validateProp,
   isPlainObject,
   isReservedAttribute
@@ -61,7 +60,7 @@ export function initState(vm: Component) {
   // 初始化computed属性
   if (opts.computed) initComputed(vm, opts.computed)
   // 初始化watch属性
-  if (opts.watch && opts.watch !== nativeWatch) {
+  if (opts.watch && opts.watch !== undefined) {
     initWatch(vm, opts.watch)
   }
 }

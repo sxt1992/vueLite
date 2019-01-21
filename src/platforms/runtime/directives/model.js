@@ -4,20 +4,8 @@
  */
 
 import { looseEqual, looseIndexOf, makeMap } from 'shared/util'
-import { isAndroid, isIE9, isIE, isEdge } from 'core/util/index'
 
 const isTextInputType = makeMap('text,number,password,search,email,tel,url')
-
-/* istanbul ignore if */
-if (isIE9) {
-  // http://www.matts411.com/post/internet-explorer-9-oninput/
-  document.addEventListener('selectionchange', () => {
-    const el = document.activeElement
-    if (el && el.vmodel) {
-      trigger(el, 'input')
-    }
-  })
-}
 
 export default {
   inserted (el, binding, vnode) {
@@ -26,10 +14,6 @@ export default {
         setSelected(el, binding, vnode.context)
       }
       cb()
-      /* istanbul ignore if */
-      if (isIE || isEdge) {
-        setTimeout(cb, 0)
-      }
       el._vOptions = [].map.call(el.options, getValue)
     } else if (vnode.tag === 'textarea' || isTextInputType(el.type)) {
       el._vModifiers = binding.modifiers
@@ -39,14 +23,8 @@ export default {
         // this also fixes the issue where some browsers e.g. iOS Chrome
         // fires "change" instead of "input" on autocomplete.
         el.addEventListener('change', onCompositionEnd)
-        if (!isAndroid) {
-          el.addEventListener('compositionstart', onCompositionStart)
-          el.addEventListener('compositionend', onCompositionEnd)
-        }
-        /* istanbul ignore if */
-        if (isIE9) {
-          el.vmodel = true
-        }
+        el.addEventListener('compositionstart', onCompositionStart)
+        el.addEventListener('compositionend', onCompositionEnd)
       }
     }
   },

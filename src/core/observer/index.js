@@ -7,7 +7,6 @@ import {
   def,
   warn,
   hasOwn,
-  hasProto,
   isObject,
   isPlainObject,
   isValidArrayIndex
@@ -42,9 +41,7 @@ export class Observer {
     this.vmCount = 0
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
-      const augment = hasProto
-        ? protoAugment
-        : copyAugment
+      const augment = protoAugment
       augment(value, arrayMethods, arrayKeys)
       this.observeArray(value)
     } else {

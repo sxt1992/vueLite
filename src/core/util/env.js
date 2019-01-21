@@ -1,45 +1,7 @@
 /* @flow */
 /* globals MutationObserver */
 
-import { noop } from 'shared/util'
 import { handleError } from './error'
-
-// can we use __proto__?
-export const hasProto = '__proto__' in {}
-
-// Browser environment sniffing
-export const UA = window.navigator.userAgent.toLowerCase()
-export const isIE = UA && /msie|trident/.test(UA)
-export const isIE9 = UA && UA.indexOf('msie 9.0') > 0
-export const isEdge = UA && UA.indexOf('edge/') > 0
-export const isAndroid = UA && UA.indexOf('android') > 0
-export const isIOS = UA && /iphone|ipad|ipod|ios/.test(UA)
-export const isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge
-
-// Firefix has a "watch" function on Object.prototype...
-export const nativeWatch = ({}).watch
-
-export let supportsPassive = false
-// http://blog.csdn.net/shenlei19911210/article/details/70198771
-try {
-  const opts = {}
-  Object.defineProperty(opts, 'passive', ({
-    get () {
-      /* istanbul ignore next */
-      supportsPassive = true
-    }
-  }: Object)) // https://github.com/facebook/flow/issues/285
-  window.addEventListener('test-passive', null, opts)
-} catch (e) { }
-
-/* istanbul ignore next */
-export function isNative (Ctor: any): boolean {
-  return typeof Ctor === 'function' && /native code/.test(Ctor.toString())
-}
-
-export const hasSymbol =
-  typeof Symbol !== 'undefined' && isNative(Symbol) &&
-  typeof Reflect !== 'undefined' && isNative(Reflect.ownKeys)
 
 /**
  * Defer a task to execute it asynchronously.
@@ -47,7 +9,6 @@ export const hasSymbol =
 export const nextTick = (function () {
   const callbacks = []
   let pending = false
-  let timerFunc
 
   function nextTickHandler () {
     pending = false
@@ -58,48 +19,8 @@ export const nextTick = (function () {
     }
   }
 
-  // the nextTick behavior leverages the microtask queue, which can be accessed
-  // via either native Promise.then or MutationObserver.
-  // MutationObserver has wider support, however it is seriously bugged in
-  // UIWebView in iOS >= 9.3.3 when triggered in touch event handlers. It
-  // completely stops working after triggering a few times... so, if native
-  // Promise is available, we will use it:
-  /* istanbul ignore if */
-  if (typeof Promise !== 'undefined' && isNative(Promise)) {
-    var p = Promise.resolve()
-    var logError = err => { console.error(err) }
-    timerFunc = () => {
-      p.then(nextTickHandler).catch(logError)
-      // in problematic UIWebViews, Promise.then doesn't completely break, but
-      // it can get stuck in a weird state where callbacks are pushed into the
-      // microtask queue but the queue isn't being flushed, until the browser
-      // needs to do some other work, e.g. handle a timer. Therefore we can
-      // "force" the microtask queue to be flushed by adding an empty timer.
-      if (isIOS) setTimeout(noop)
-    }
-  } else if (typeof MutationObserver !== 'undefined' && (
-    isNative(MutationObserver) ||
-    // PhantomJS and iOS 7.x
-    MutationObserver.toString() === '[object MutationObserverConstructor]'
-  )) {
-    // use MutationObserver where native Promise is not available,
-    // e.g. PhantomJS IE11, iOS7, Android 4.4
-    var counter = 1
-    var observer = new MutationObserver(nextTickHandler)
-    var textNode = document.createTextNode(String(counter))
-    observer.observe(textNode, {
-      characterData: true
-    })
-    timerFunc = () => {
-      counter = (counter + 1) % 2
-      textNode.data = String(counter)
-    }
-  } else {
-    // fallback to setTimeout
-    /* istanbul ignore next */
-    timerFunc = () => {
-      setTimeout(nextTickHandler, 0)
-    }
+  const timerFunc = () => {
+    Promise.resolve().then(nextTickHandler).catch(err => { console.error(err) })
   }
 
   return function queueNextTick (cb?: Function, ctx?: Object) {
@@ -126,36 +47,3 @@ export const nextTick = (function () {
     }
   }
 })()
-
-let _Set
-/* istanbul ignore if */
-if (typeof Set !== 'undefined' && isNative(Set)) {
-  // use native Set when available.
-  _Set = Set
-} else {
-  // a non-standard Set polyfill that only works with primitive keys.
-  _Set = class Set implements ISet {
-    set: Object;
-    constructor () {
-      this.set = Object.create(null)
-    }
-    has (key: string | number) {
-      return this.set[key] === true
-    }
-    add (key: string | number) {
-      this.set[key] = true
-    }
-    clear () {
-      this.set = Object.create(null)
-    }
-  }
-}
-
-interface ISet {
-  has(key: string | number): boolean;
-  add(key: string | number): mixed;
-  clear(): void;
-}
-
-export { _Set }
-export type { ISet }

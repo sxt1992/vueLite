@@ -5,7 +5,6 @@ import { cached } from 'core/util/index'
 
 import Vue from './runtime/index'
 import { query } from './util/index'
-import { shouldDecodeNewlines } from './util/compat'
 import { compileToFunctions } from './compiler/index'
 
 const idToTemplate = cached(id => {
@@ -45,7 +44,6 @@ Vue.prototype.$mount = function (
     if (template) {
 
       const { render, staticRenderFns } = compileToFunctions(template, {
-        shouldDecodeNewlines,
         delimiters: options.delimiters,
         comments: options.comments
       }, this)

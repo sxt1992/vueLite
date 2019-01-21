@@ -1,6 +1,4 @@
 /* @flow */
-
-import { isIE9, warn } from 'core/util/index'
 import { mergeVNodeHook } from 'core/vdom/helpers/index'
 import { activeInstance } from 'core/instance/lifecycle'
 
@@ -105,7 +103,7 @@ export function enter (vnode: VNodeWithData, toggleDisplay: ?() => void) {
       : duration
   )
 
-  const expectsCSS = css !== false && !isIE9
+  const expectsCSS = css !== false
   const userWantsControl = getHookArgumentsLength(enterHook)
 
   const cb = el._enterCb = once(() => {
@@ -200,7 +198,7 @@ export function leave (vnode: VNodeWithData, rm: Function) {
     duration
   } = data
 
-  const expectsCSS = css !== false && !isIE9
+  const expectsCSS = css !== false
   const userWantsControl = getHookArgumentsLength(leave)
 
   const explicitLeaveDuration: any = toNumber(

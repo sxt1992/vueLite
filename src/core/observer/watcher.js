@@ -8,11 +8,14 @@ import {
   remove,
   isObject,
   parsePath,
-  _Set as Set,
   handleError
 } from '../util/index'
 
-import type { ISet } from '../util/index'
+interface ISet {
+  has(key: string | number): boolean;
+  add(key: string | number): mixed;
+  clear(): void;
+}
 
 let uid = 0
 
