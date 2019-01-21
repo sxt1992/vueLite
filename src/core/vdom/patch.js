@@ -535,20 +535,24 @@ export function createPatchFunction (backend) {
 
     let isInitialPatch = false
     const insertedVnodeQueue = []
-    // 当oldVnode不存在时
+    // 当oldVnode不存在时,则直接调用销毁钩子
     if (isUndef(oldVnode)) {
       // 创建新的节点
+      /*oldVnode未定义的时候，其实也就是root节点，创建一个新的节点*/
       // empty mount (likely as component), create new root element
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue, parentElm, refElm)
     } else {
+      /*标记旧的VNode是否有nodeType*/
       const isRealElement = isDef(oldVnode.nodeType)
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
+        /*是同一个节点的时候直接修改现有的节点*/
         patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)
       } else {
         if (isRealElement) {
           if (isTrue(hydrating)) {
+            /*需要合并到真实DOM上*/
             if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
               invokeInsertHook(vnode, insertedVnodeQueue, true)
               return oldVnode
@@ -556,9 +560,11 @@ export function createPatchFunction (backend) {
           }
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
+          /*如果不是服务端渲染或者合并到真实DOM失败，则创建一个空的VNode节点替换它*/
           oldVnode = emptyNodeAt(oldVnode)
         }
         // replacing existing element
+        /*取代现有元素*/
         const oldElm = oldVnode.elm
         const parentElm = nodeOps.parentNode(oldElm)
         createElm(
