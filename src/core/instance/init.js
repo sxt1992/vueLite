@@ -17,8 +17,6 @@ export function initMixin (Vue: Class<Component>) {
     // a uid
     vm._uid = uid++
 
-    let startTag, endTag
-
     // a flag to avoid this being observed
     vm._isVue = true
     // merge options

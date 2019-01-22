@@ -40,7 +40,7 @@ export const nextTick = (function () {
       pending = true
       timerFunc()
     }
-    if (!cb && typeof Promise !== 'undefined') {
+    if (!cb) {
       return new Promise((resolve, reject) => {
         _resolve = resolve
       })

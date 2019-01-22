@@ -12,8 +12,6 @@ import {
   isValidArrayIndex
 } from '../util/index'
 
-const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
-
 /**
  * By default, when a reactive property is set, the new value is
  * also converted to become reactive. However when passing down props,
@@ -41,8 +39,7 @@ export class Observer {
     this.vmCount = 0
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
-      const augment = protoAugment
-      augment(value, arrayMethods, arrayKeys)
+      value.__proto__ = arrayMethods
       this.observeArray(value)
     } else {
       this.walk(value)
@@ -68,30 +65,6 @@ export class Observer {
     for (let i = 0, l = items.length; i < l; i++) {
       observe(items[i])
     }
-  }
-}
-
-// helpers
-
-/**
- * Augment an target Object or Array by intercepting
- * the prototype chain using __proto__
- */
-function protoAugment (target, src: Object, keys: any) {
-  /* eslint-disable no-proto */
-  target.__proto__ = src
-  /* eslint-enable no-proto */
-}
-
-/**
- * Augment an target Object or Array by defining
- * hidden properties.
- */
-/* istanbul ignore next */
-function copyAugment (target: Object, src: Object, keys: Array<string>) {
-  for (let i = 0, l = keys.length; i < l; i++) {
-    const key = keys[i]
-    def(target, key, src[key])
   }
 }
 

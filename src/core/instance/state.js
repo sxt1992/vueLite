@@ -105,8 +105,6 @@ function initData(vm: Component) {
   }
   // proxy data on instance
   const keys = Object.keys(data)
-  const props = vm.$options.props
-  const methods = vm.$options.methods
   let i = keys.length
   while (i--) {
     const key = keys[i]
