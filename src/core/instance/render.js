@@ -83,7 +83,7 @@ export function renderMixin (Vue: Class<Component>) {
     // render self
     let vnode
     try {
-      vnode = render.call(vm._renderProxy, vm.$createElement)
+      vnode = render.call(vm, vm.$createElement)
     } catch (e) {
       handleError(e, vm, `render function`)
       vnode = vm._vnode

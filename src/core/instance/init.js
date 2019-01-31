@@ -34,9 +34,6 @@ export function initMixin (Vue: Class<Component>) {
       )
     }
 
-    vm._renderProxy = vm
-    // expose(揭露) real self
-    vm._self = vm
     // 虚拟vdom,添加基础参数,lifecycle初始化
     initLifecycle(vm)
     // 挂载监听,vm._events, 主要是提供vm实例上的$on/$emit/$off/$off等方法

@@ -10,7 +10,7 @@ import {
 // beforeCreate ... destroyed
 import { LIFECYCLE_HOOKS } from 'shared/constants'
 
-export type Config = {
+type Config = {
   // user
   optionMergeStrategies: { [key: string]: Function };
   silent: boolean;

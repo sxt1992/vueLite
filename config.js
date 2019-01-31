@@ -3,7 +3,7 @@ const flow = require('rollup-plugin-flow-no-whitespace')
 const alias = require('rollup-plugin-alias')
 const cleanup = require('rollup-plugin-cleanup')
 
-const removeComments = false;
+const removeComments = true;
 
 module.exports = {
   entry: path.resolve(__dirname, 'src/platforms/compiler.js'),

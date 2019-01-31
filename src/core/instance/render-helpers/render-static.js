@@ -19,7 +19,7 @@ export function renderStatic (
   }
   // otherwise, render a fresh tree.
   tree = this._staticTrees[index] =
-    this.$options.staticRenderFns[index].call(this._renderProxy)
+    this.$options.staticRenderFns[index].call(this)
   markStatic(tree, `__static__${index}`, false)
   return tree
 }
